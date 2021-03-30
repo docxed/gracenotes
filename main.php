@@ -69,6 +69,16 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                         <a class="nav-link <?php if (isset($_GET['q']) && $_GET['q'] == 'report'){ echo 'active'; } ?>"
                             href="./main.php?q=report"><i class="fas fa-bug"></i> รายงานปัญหา</a>
                     </li>
+                    <?php
+                    if ($_SESSION['level'] == 'teacher'){
+                    ?>
+                    <li class="nav-item">
+                        <a class="nav-link <?php if (isset($_GET['q']) && $_GET['q'] == 'admin'){ echo 'active'; } ?> text-danger"
+                            href="./main.php?q=admin"><i class="fas fa-asterisk"></i> Admin Panel</a>
+                    </li>
+                    <?php
+                    }
+                    ?>
                 </ul>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown dropstart">
@@ -605,9 +615,15 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
         <div class="container">
             <div class="col-lg-9 col-md-12 col-sm-12 mx-auto">
                 <div class="content">
-                    <h4><?php echo $rowq['report_topic']; ?></h4>
-                    <p><?php echo $rowq['report_detail']; ?></p>
-                    <p class="text-end">ส่งเมื่อ <?php echo $rowq['report_timestamp']; ?></p>
+                    <h4>
+                        <?php echo $rowq['report_topic']; ?>
+                    </h4>
+                    <p>
+                        <?php echo $rowq['report_detail']; ?>
+                    </p>
+                    <p class="text-end">ส่งเมื่อ
+                        <?php echo $rowq['report_timestamp']; ?>
+                    </p>
                 </div>
             </div>
             <div class="col-lg-9 col-md-12 col-sm-12 my-3">
@@ -620,8 +636,12 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
             ?>
             <div class="col-lg-9 col-md-12 col-sm-12 mx-auto">
                 <div class="content">
-                        <h5><?php echo $rowd['reply_detail']; ?></h5>
-                        <p>ตอบกลับเมื่อ <?php echo $rowd['reply_timestamp']; ?></p>
+                    <h5>
+                        <?php echo $rowd['reply_detail']; ?>
+                    </h5>
+                    <p>ตอบกลับเมื่อ
+                        <?php echo $rowd['reply_timestamp']; ?>
+                    </p>
                 </div>
             </div>
             <br>
@@ -630,18 +650,338 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
             ?>
             <br><br>
 
-
         </div>
         <?php
         }
         ?>
 
-        <script type="text/javascript">
-            var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-            var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-                return new bootstrap.Popover(popoverTriggerEl)
-            })
-        </script>
+        <!--Admin-->
+        <?php
+        if (isset($_GET['q']) && $_GET['q'] == 'admin' && $_SESSION['level'] == 'teacher'){
+        ?>
+        <div class="container">
+            <a href="?q=mgrace"><button class="btn btn-primary">ตรวจบันทึกความดี</button></a>
+            <a href="?q=msocial"><button class="btn btn-success">จัดการโพสต์</button></a>
+            <a href="?q=maccount"><button class="btn btn-info">จัดการบัญชีนักเรียน</button></a>
+            <a href="?q=mreport"><button class="btn btn-warning">จัดการรายงานปัญหา</button></a>
+            <br><br>
+        </div>
+        <?php
+        }
+        ?>
+
+        <!--Mgrace-->
+        <?php
+        if (isset($_GET['q']) && $_GET['q'] == 'mgrace' && $_SESSION['level'] == 'teacher'){
+        ?>
+        <div class="container">
+            <a href="?q=mgrace"><button class="btn btn-primary">ตรวจบันทึกความดี</button></a>
+            <a href="?q=msocial"><button class="btn btn-success">จัดการโพสต์</button></a>
+            <a href="?q=maccount"><button class="btn btn-info">จัดการบัญชีนักเรียน</button></a>
+            <a href="?q=mreport"><button class="btn btn-warning">จัดการรายงานปัญหา</button></a>
+            <br><br>
+            <h3>จัดการบันทึกความดี</h3>
+            <form action="main.php" method="GET" class="row my-3">
+                <input type="hidden" name="q" value="msrgrace">
+                <div class="col-auto">
+                    <input type="text" class="form-control" placeholder="ค้นหา" name="key" required>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-info"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+
+        <?php
+            $c = "SELECT COUNT(grace_id) AS total FROM grace";
+            $resc = mysqli_query($dbcon, $c);
+            $rowc = mysqli_fetch_array($resc, MYSQLI_ASSOC);
+
+            $c1 = "SELECT COUNT(grace_id) AS wait FROM grace WHERE grace_check='รอการอนุมัติ'";
+            $resc1 = mysqli_query($dbcon, $c1);
+            $rowc1 = mysqli_fetch_array($resc1, MYSQLI_ASSOC);
+
+            $c2 = "SELECT COUNT(grace_id) AS checked FROM grace WHERE grace_check!='รอการอนุมัติ'";
+            $resc2 = mysqli_query($dbcon, $c2);
+            $rowc2 = mysqli_fetch_array($resc2, MYSQLI_ASSOC);
+            ?>
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+                    type="button" role="tab" aria-controls="pills-home" aria-selected="true">ความดีทั้งหมด <span
+                        class="badge bg-light text-dark">
+                        <?php echo $rowc['total']; ?>
+                    </span> </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
+                    type="button" role="tab" aria-controls="pills-profile" aria-selected="false">รอการตรวจ <span
+                        class="badge bg-light text-dark">
+                        <?php echo $rowc1['wait']; ?>
+                    </span> </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact"
+                    type="button" role="tab" aria-controls="pills-contact" aria-selected="false">ตรวจแล้ว <span
+                        class="badge bg-light text-dark">
+                        <?php echo $rowc2['checked']; ?>
+                    </span> </button>
+            </li>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <td class="text-center">หมายเลขบันทึก</td>
+                            <td class="text-center">ผู้บันทึก</td>
+                            <td class="text-center">สถานะตรวจ</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                    $q = "SELECT * FROM grace ORDER BY grace_id DESC";
+                    $resq = mysqli_query($dbcon, $q);
+                    while ($rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC)) {
+                    ?>
+
+                        <tr>
+                            <td class="text-center">
+                                <?php echo $rowq['grace_id']; ?>
+                            </td>
+                            <?php
+                            $id_stu = $rowq['member_id'];
+                            $m = "SELECT member_fname, member_lname FROM members WHERE member_id='$id_stu'";
+                            $resm = mysqli_query($dbcon, $m);
+                            $rowm = mysqli_fetch_array($resm, MYSQLI_ASSOC);
+                            ?>
+                            <td class="text-center">
+                                <?php echo $rowm['member_fname'].' '.$rowm['member_lname']; ?>
+                            </td>
+                            <td class="text-center">
+                                <a href="?q=mview&g=<?php echo $rowq['grace_id']; ?>">
+                                    <?php
+                                if ($rowq['grace_check'] == 'รอการอนุมัติ'){
+                                    echo "
+                                    <span class='badge bg-secondary'>รอการตรวจ</span>
+                                    ";
+                                }else{
+                                    echo "
+                                    <span class='badge bg-success'>ตรวจแล้ว</span>
+                                    ";
+                                    }
+                                    ?>
+                                </a>
+                            </td>
+                        </tr>
+
+                        <?php
+                    }
+                    ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <td class="text-center">หมายเลขบันทึก</td>
+                            <td class="text-center">ผู้บันทึก</td>
+                            <td class="text-center">สถานะตรวจ</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                    $q = "SELECT * FROM grace WHERE grace_check='รอการอนุมัติ' ORDER BY grace_id DESC";
+                    $resq = mysqli_query($dbcon, $q);
+                    while ($rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC)) {
+                    ?>
+                        <tr>
+                            <td class="text-center">
+                                <?php echo $rowq['grace_id']; ?>
+                            </td>
+                            <?php
+                            $id_stu = $rowq['member_id'];
+                            $m = "SELECT member_fname, member_lname FROM members WHERE member_id='$id_stu'";
+                            $resm = mysqli_query($dbcon, $m);
+                            $rowm = mysqli_fetch_array($resm, MYSQLI_ASSOC);
+                            ?>
+                            <td class="text-center">
+                                <?php echo $rowm['member_fname'].' '.$rowm['member_lname']; ?>
+                            </td>
+                            <td class="text-center">
+                                <a href="?q=mview&g=<?php echo $rowq['grace_id']; ?>">
+                                    <?php
+                                if ($rowq['grace_check'] == 'รอการอนุมัติ'){
+                                    echo "
+                                    <span class='badge bg-secondary'>รอการตรวจ</span>
+                                    ";
+                                }else{
+                                    echo "
+                                    <span class='badge bg-success'>ตรวจแล้ว</span>
+                                    ";
+                                    }
+                                    ?>
+                                </a>
+                            </td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <td class="text-center">หมายเลขบันทึก</td>
+                            <td class="text-center">ผู้บันทึก</td>
+                            <td class="text-center">สถานะตรวจ</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                    $q = "SELECT * FROM grace WHERE grace_check!='รอการอนุมัติ' ORDER BY grace_id DESC";
+                    $resq = mysqli_query($dbcon, $q);
+                    while ($rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC)) {
+                    ?>
+                        <tr>
+                            <td class="text-center">
+                                <?php echo $rowq['grace_id']; ?>
+                            </td>
+                            <?php
+                            $id_stu = $rowq['member_id'];
+                            $m = "SELECT member_fname, member_lname FROM members WHERE member_id='$id_stu'";
+                            $resm = mysqli_query($dbcon, $m);
+                            $rowm = mysqli_fetch_array($resm, MYSQLI_ASSOC);
+                            ?>
+                            <td class="text-center">
+                                <?php echo $rowm['member_fname'].' '.$rowm['member_lname']; ?>
+                            </td>
+                            <td class="text-center">
+                                <a href="?q=mview&g=<?php echo $rowq['grace_id']; ?>">
+                                    <?php
+                                if ($rowq['grace_check'] == 'รอการอนุมัติ'){
+                                    echo "
+                                    <span class='badge bg-secondary'>รอการตรวจ</span>
+                                    ";
+                                }else{
+                                    echo "
+                                    <span class='badge bg-success'>ตรวจแล้ว</span>
+                                    ";
+                                    }
+                                    ?>
+                                </a>
+                            </td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+
+        <br><br>
+    </div>
+    <?php
+        }
+        ?>
+
+    <!--msrgrace-->
+    <?php
+        if (isset($_GET['q']) && $_GET['q'] == 'msrgrace' && $_SESSION['level'] == 'teacher'){
+        ?>
+    <div class="container">
+        <a href="?q=mgrace"><button class="btn btn-primary">ตรวจบันทึกความดี</button></a>
+        <a href="?q=msocial"><button class="btn btn-success">จัดการโพสต์</button></a>
+        <a href="?q=maccount"><button class="btn btn-info">จัดการบัญชีนักเรียน</button></a>
+        <a href="?q=mreport"><button class="btn btn-warning">จัดการรายงานปัญหา</button></a>
+        <br><br>
+        <form action="main.php" method="GET" class="row my-3">
+                <input type="hidden" name="q" value="msrgrace">
+                <div class="col-auto">
+                    <input type="text" class="form-control" placeholder="ค้นหา" name="key" required>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-info"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+        
+        <h3>ผลการค้นหา: <span class="text-primary"><?php echo $_GET['key']; ?></span></h3>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <td class="text-center">หมายเลขบันทึก</td>
+                    <td class="text-center">ผู้บันทึก</td>
+                    <td class="text-center">สถานะตรวจ</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $key = '%'.$_GET['key'].'%';
+            $q = "SELECT * FROM grace
+            JOIN members
+            USING (member_id)
+            WHERE members.member_fname LIKE '$key'
+            OR members.member_lname LIKE '$key'
+            OR grace_id LIKE '$key'
+            ORDER BY grace_id DESC";
+            $resq = mysqli_query($dbcon, $q);
+            while ($rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC)) {
+            ?>
+                <tr>
+                    <td class="text-center">
+                        <?php echo $rowq['grace_id']; ?>
+                    </td>
+                    <?php
+                    $id_stu = $rowq['member_id'];
+                    $m = "SELECT member_fname, member_lname FROM members WHERE member_id='$id_stu'";
+                    $resm = mysqli_query($dbcon, $m);
+                    $rowm = mysqli_fetch_array($resm, MYSQLI_ASSOC);
+                    ?>
+                    <td class="text-center">
+                        <?php echo $rowm['member_fname'].' '.$rowm['member_lname']; ?>
+                    </td>
+                    <td class="text-center">
+                        <a href="?q=mview&g=<?php echo $rowq['grace_id']; ?>">
+                            <?php
+                        if ($rowq['grace_check'] == 'รอการอนุมัติ'){
+                            echo "
+                            <span class='badge bg-secondary'>รอการตรวจ</span>
+                            ";
+                        }else{
+                            echo "
+                            <span class='badge bg-success'>ตรวจแล้ว</span>
+                            ";
+                            }
+                            ?>
+                        </a>
+                    </td>
+                </tr>
+                <?php
+            }
+            ?>
+            </tbody>
+        </table>
+
+        <br><br>
+    </div>
+    <?php
+        }
+        ?>
+
+    <script type="text/javascript">
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+        })
+    </script>
 </body>
 
 </html>

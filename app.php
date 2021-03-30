@@ -78,7 +78,11 @@
             $_SESSION['user'] = $rowq['member_user'];
             $_SESSION['uid'] = $rowq['member_id'];
             $_SESSION['level'] = $rowq['member_level'];
-            header('location: main.php');
+            if ($_SESSION['level'] == 'teacher'){
+                header('location: main.php?q=admin');
+            }else{
+                header('location: main.php');
+            }
           }
     }
 
