@@ -126,7 +126,7 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
             “ความดี” คือสายใยอันนุ่มเหนียว ที่ร้อยโยงผู้คนหลากหลายไปสู่ความสันติ ความเจริญ และความสุข ร่วมกัน
         </p>
         <br>
-            <h3>ความดีของฉัน ล่าสุด</h3>
+        <h3>ความดีของฉัน ล่าสุด</h3>
         <div class="mx-auto col-lg-6 col-md-8 col-sm-12">
             <?php
         $q = "SELECT * FROM grace WHERE member_id = '$uid' ORDER BY grace_id DESC";
@@ -299,7 +299,7 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                 <?php echo $rowa['member_fname'].' '.$rowa['member_lname']; ?>
             </span></h3><br>
         <nav>
-        <?php
+            <?php
             $c = "SELECT COUNT(grace_id) AS total FROM grace WHERE member_id='$uid'";
             $resc = mysqli_query($dbcon, $c);
             $rowc = mysqli_fetch_array($resc, MYSQLI_ASSOC);
@@ -315,13 +315,19 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
                     type="button" role="tab" aria-controls="nav-home" aria-selected="true">ทั้งหมด <span
-                        class="badge bg-warning"><?php echo $rowc['total']; ?></span></button>
+                        class="badge bg-warning">
+                        <?php echo $rowc['total']; ?>
+                    </span></button>
                 <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
                     type="button" role="tab" aria-controls="nav-profile" aria-selected="false">รับรอง <span
-                        class="badge bg-success"><?php echo $rowc1['yes']; ?></span></button>
+                        class="badge bg-success">
+                        <?php echo $rowc1['yes']; ?>
+                    </span></button>
                 <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact"
                     type="button" role="tab" aria-controls="nav-contact" aria-selected="false">ไม่รับรอง <span
-                        class="badge bg-danger"><?php echo $rowc2['no']; ?></span></button>
+                        class="badge bg-danger">
+                        <?php echo $rowc2['no']; ?>
+                    </span></button>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -351,7 +357,7 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                                 </span>
                                 <p class="text-end"">
                                     วันที่
-                                    <?php echo date("d/m/Y", strtotime($rowq['grace_date'])); ?>
+                                    <?php echo date(" d/m/Y", strtotime($rowq['grace_date'])); ?>
                                 </p>
                             </div>
                             <a href="./main.php?q=view&g=<?php echo $rowq['grace_id']; ?>"><img
@@ -390,7 +396,7 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                                 </span>
                                 <p class="text-end"">
                                     วันที่
-                                    <?php echo date("d/m/Y", strtotime($rowq['grace_date'])); ?>
+                                    <?php echo date(" d/m/Y", strtotime($rowq['grace_date'])); ?>
                                 </p>
                             </div>
                             <a href="./main.php?q=view&g=<?php echo $rowq['grace_id']; ?>"><img
@@ -429,7 +435,7 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                                 </span>
                                 <p class="text-end"">
                                     วันที่
-                                    <?php echo date("d/m/Y", strtotime($rowq['grace_date'])); ?>
+                                    <?php echo date(" d/m/Y", strtotime($rowq['grace_date'])); ?>
                                 </p>
                             </div>
                             <a href="./main.php?q=view&g=<?php echo $rowq['grace_id']; ?>"><img
@@ -487,6 +493,54 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                             src="grace/<?php echo $rowq['grace_img']; ?>" class="rounded card-img-bottom"></a>
                 </div>
                 <br>
+            </div>
+            <br><br>
+
+
+        </div>
+        <?php
+        }
+        ?>
+
+        <!--Report-->
+        <?php
+        if (isset($_GET['q']) && $_GET['q'] == 'report'){
+        ?>
+        <div class="container">
+            <h3>รายงานปัญหา</h3>
+            <div class="row">
+                <div class="col-lg-7 col-md-12 col-sm-12 mx-auto">
+                    <form action="./app.php?func=report" method="POST">
+                        <label for="head">หัวข้อ</label>
+                        <input type="text" class="form-control" placeholder="หัวข้อ" name="head" maxlength="100" required>
+                        <label for="body">รายละเอียด</label>
+                        <textarea name="body" class="form-control" placeholder="รายะเอียด" cols="30" rows="2" required></textarea>
+                        <input type="hidden" name="uid" value="<?php echo $uid; ?>">
+                        <br>
+                        <p class="text-center"><input type="submit" class="btn btn-warning" value="ส่งรายงาน"></p>
+                    </form>
+                </div>
+            </div>
+            <br>
+            <h3>กล่องรายงานตอบกลับ</h3>
+            <?php
+                $q = "SELECT * FROM report WHERE member_id = '$uid'";
+                $resq = mysqli_query($dbcon, $q);
+            ?>
+            <div class="content">
+                <table class="table">
+                    <tbody>
+                        <?php
+                            while ($rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC)) {
+                        ?>
+                        <tr>
+                            <td><?php echo $rowq['report_topic']; ?></td>
+                        </tr>
+                        <?php
+                            } mysqli_free_result($resq); 
+                        ?>
+                    </tbody>
+                </table>
             </div>
             <br><br>
 
