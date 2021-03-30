@@ -512,9 +512,11 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                 <div class="col-lg-7 col-md-12 col-sm-12 mx-auto">
                     <form action="./app.php?func=report" method="POST">
                         <label for="head">หัวข้อ</label>
-                        <input type="text" class="form-control" placeholder="หัวข้อ" name="head" maxlength="100" required>
+                        <input type="text" class="form-control" placeholder="หัวข้อ" name="head" maxlength="100"
+                            required>
                         <label for="body">รายละเอียด</label>
-                        <textarea name="body" class="form-control" placeholder="รายะเอียด" cols="30" rows="2" required></textarea>
+                        <textarea name="body" class="form-control" placeholder="รายะเอียด" cols="30" rows="2"
+                            required></textarea>
                         <input type="hidden" name="uid" value="<?php echo $uid; ?>">
                         <br>
                         <p class="text-center"><input type="submit" class="btn btn-warning" value="ส่งรายงาน"></p>
@@ -522,19 +524,61 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                 </div>
             </div>
             <br>
-            <h3>กล่องรายงานตอบกลับ</h3>
+            <h3>กล่องรายงานปัญหา</h3>
             <?php
                 $q = "SELECT * FROM report WHERE member_id = '$uid'";
                 $resq = mysqli_query($dbcon, $q);
             ?>
             <div class="content">
                 <table class="table">
+                    <thead>
+                        <tr>
+                            <td class="col-lg-10">
+                                <p class="text-center">หัวข้อ</p>
+                            </td>
+                            <td class="col-lg-2">
+                                <p class="text-center">สถานะ</p>
+                            </td>
+                        </tr>
+                    </thead>
                     <tbody>
                         <?php
                             while ($rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC)) {
+                            $rid = $rowq['report_id'];
+                            $c = "SELECT COUNT(reply_id) AS total FROM report_feedback WHERE report_id='$rid'";
+                            $resc = mysqli_query($dbcon, $c);
+                            $rowc = mysqli_fetch_array($resc, MYSQLI_ASSOC);
                         ?>
                         <tr>
-                            <td><?php echo $rowq['report_topic']; ?></td>
+                            <td>
+                                <div class="d-flex">
+                                    <a style="text-decoration: none; color: black;"
+                                        href="?q=viewreport&g=<?php echo $rowq['report_id']; ?>">
+                                        <?php echo $rowq['report_topic']; ?>
+                                    </a>
+                                    <div class="ms-auto">
+                                        <i class="fas fa-info-circle" data-bs-container="body" data-bs-toggle="popover"
+                                            data-bs-placement="bottom"
+                                            data-bs-content="ส่งเมื่อ <?php echo $rowq['report_timestamp']?>"></i>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex">
+                                    <div class="mx-auto">
+                                        <span
+                                            class="badge <?php if ($rowc['total'] == 0){echo 'bg-secondary';}else{echo 'bg-info';} ?>">
+                                            <?php
+                                            if ($rowc['total'] == 0){
+                                                echo 'ยังไม่มีการตอบรับ';
+                                            }else{
+                                                echo 'ตอบรับแล้ว';
+                                            }
+                                            ?>
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
                         <?php
                             } mysqli_free_result($resq); 
@@ -542,6 +586,48 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                     </tbody>
                 </table>
             </div>
+            <br><br>
+
+
+        </div>
+        <?php
+        }
+        ?>
+
+        <!--Report View-->
+        <?php
+        if (isset($_GET['q']) && $_GET['q'] == 'viewreport'){
+        $id = $_GET['g'];
+        $q = "SELECT * FROM report WHERE member_id = '$uid' AND report_id='$id'";
+        $resq = mysqli_query($dbcon, $q);
+        $rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC);
+        ?>
+        <div class="container">
+            <div class="col-lg-9 col-md-12 col-sm-12 mx-auto">
+                <div class="content">
+                    <h4><?php echo $rowq['report_topic']; ?></h4>
+                    <p><?php echo $rowq['report_detail']; ?></p>
+                    <p class="text-end">ส่งเมื่อ <?php echo $rowq['report_timestamp']; ?></p>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-12 col-sm-12 my-3">
+                <h3>กล่องรายงานตอบกลับ</h3>
+            </div>
+            <?php
+            $d = "SELECT * FROM report_feedback WHERE report_id='$id'";
+            $resd = mysqli_query($dbcon, $d);
+            while ($rowd = mysqli_fetch_array($resd, MYSQLI_ASSOC)) {
+            ?>
+            <div class="col-lg-9 col-md-12 col-sm-12 mx-auto">
+                <div class="content">
+                        <h5><?php echo $rowd['reply_detail']; ?></h5>
+                        <p>ตอบกลับเมื่อ <?php echo $rowd['reply_timestamp']; ?></p>
+                </div>
+            </div>
+            <br>
+            <?php
+            }
+            ?>
             <br><br>
 
 

@@ -169,17 +169,17 @@
         $uid = $_POST['uid'];
         $q = "INSERT INTO report (report_topic, report_detail, member_id) VALUES ('$head', '$body', '$uid')";
         $resq = mysqli_query($dbcon, $q);
-            if($resq){
-                echo "<script>";
-                echo "alert('ดำเนินการสำเร็จ');";
-                echo "window.location.href='main.php?q=report';";
-                echo "</script>";
-            }else{
-                echo "<script>";
-                echo "alert('เกิดข้อผิดพลาดในขณะนี้');";
-                echo "window.location.href='index.php';";
-                echo "</script>";
-            }
+        if($resq){
+            echo "<script>";
+            echo "alert('ดำเนินการสำเร็จ');";
+            echo "window.location.href='main.php?q=report';";
+            echo "</script>";
+        }else{
+            echo "<script>";
+            echo "alert('เกิดข้อผิดพลาดในขณะนี้');";
+            echo "window.location.href='index.php';";
+            echo "</script>";
+        }
     }
 
     node();
