@@ -898,10 +898,12 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
         if (isset($_GET['q']) && $_GET['q'] == 'msrgrace' && $_SESSION['level'] == 'teacher'){
         ?>
     <div class="container">
-        <a href="?q=mgrace"><button class="btn btn-primary">ตรวจบันทึกความดี</button></a>
-        <a href="?q=msocial"><button class="btn btn-success">จัดการโพสต์</button></a>
-        <a href="?q=maccount"><button class="btn btn-info">จัดการบัญชีนักเรียน</button></a>
-        <a href="?q=mreport"><button class="btn btn-warning">จัดการรายงานปัญหา</button></a>
+
+        <a href="?q=mgrace"><button class="btn btn-primary m-1">ตรวจบันทึกความดี</button></a>
+        <a href="?q=msocial"><button class="btn btn-success m-1">จัดการโพสต์</button></a>
+        <a href="?q=maccount"><button class="btn btn-info m-1">จัดการบัญชีนักเรียน</button></a>
+        <a href="?q=mreport"><button class="btn btn-warning m-1">จัดการรายงานปัญหา</button></a>
+
         <br><br>
         <form action="main.php" method="GET" class="row my-3">
                 <input type="hidden" name="q" value="msrgrace">
