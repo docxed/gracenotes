@@ -237,7 +237,7 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
             <?php
             if ($rowc33['c33'] == 1){
             ?>
-            <span class="text-warning"><i class="fas fa-praying-hands"></i>
+            <span class="text-warning"><i class="fas fa-praying-hands m-3"></i>
                 <?php echo $rowc3['c3']; ?>
             </span>
             <?php
@@ -245,7 +245,7 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
             ?>
             <a href="app.php?func=likeadd&type=sadu&uid=<?php echo $uid; ?>&sid=<?php echo $id; ?>" style="text-decoration: none;">
                 <span class="text-dark">
-                    <i class="fas fa-praying-hands"></i>
+                    <i class="fas fa-praying-hands m-3"></i>
             </a>
             <?php echo $rowc3['c3']; ?>
             </span>
