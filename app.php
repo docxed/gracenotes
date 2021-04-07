@@ -389,7 +389,6 @@
             $resq2 = mysqli_query($dbcon, $q2);
             if($resq2){
                 echo "<script>";
-                echo "alert('ดำเนินการสำเร็จ');";
                 echo "window.location.href='main.php?q=social&g=$sid';";
                 echo "</script>";
             }else{
