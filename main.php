@@ -253,7 +253,7 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                     src="./student/<?php echo $rowa['member_img']; ?>" class="img-fluid"
                     style="border-radius: 8px; width: 25%;" alt=""></a>
         </p>
-        <div class="content mx-auto" style="width: 60%;">
+        <div class="content mx-auto col-lg-7 col-md-12 col-sm-12">
             <h3>แก้ไขข้อมูลบัญชีผู้ใช้</h3>
             <form action="app.php?func=profile" method="POST">
                 <label for="id">รหัสนักเรียน</label>
@@ -660,10 +660,10 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
         if (isset($_GET['q']) && $_GET['q'] == 'admin' && $_SESSION['level'] == 'teacher'){
         ?>
         <div class="container">
-            <a href="?q=mgrace"><button class="btn btn-primary">ตรวจบันทึกความดี</button></a>
-            <a href="?q=msocial"><button class="btn btn-success">จัดการโพสต์</button></a>
-            <a href="?q=maccount"><button class="btn btn-info">จัดการบัญชีนักเรียน</button></a>
-            <a href="?q=mreport"><button class="btn btn-warning">จัดการรายงานปัญหา</button></a>
+            <a href="?q=mgrace"><button class="btn btn-primary m-1">ตรวจบันทึกความดี</button></a>
+            <a href="?q=msocial"><button class="btn btn-success m-1">จัดการโพสต์</button></a>
+            <a href="?q=maccount"><button class="btn btn-info m-1">จัดการบัญชีนักเรียน</button></a>
+            <a href="?q=mreport"><button class="btn btn-warning m-1">จัดการรายงานปัญหา</button></a>
             <br><br>
         </div>
         <?php
@@ -675,10 +675,10 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
         if (isset($_GET['q']) && $_GET['q'] == 'mgrace' && $_SESSION['level'] == 'teacher'){
         ?>
         <div class="container">
-            <a href="?q=mgrace"><button class="btn btn-primary">ตรวจบันทึกความดี</button></a>
-            <a href="?q=msocial"><button class="btn btn-success">จัดการโพสต์</button></a>
-            <a href="?q=maccount"><button class="btn btn-info">จัดการบัญชีนักเรียน</button></a>
-            <a href="?q=mreport"><button class="btn btn-warning">จัดการรายงานปัญหา</button></a>
+            <a href="?q=mgrace"><button class="btn btn-primary m-1">ตรวจบันทึกความดี</button></a>
+            <a href="?q=msocial"><button class="btn btn-success m-1">จัดการโพสต์</button></a>
+            <a href="?q=maccount"><button class="btn btn-info m-1">จัดการบัญชีนักเรียน</button></a>
+            <a href="?q=mreport"><button class="btn btn-warning m-1">จัดการรายงานปัญหา</button></a>
             <br><br>
             <h3>จัดการบันทึกความดี</h3>
             <form action="main.php" method="GET" class="row my-3">
@@ -691,7 +691,7 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                 </div>
             </form>
 
-        <?php
+            <?php
             $c = "SELECT COUNT(grace_id) AS total FROM grace";
             $resc = mysqli_query($dbcon, $c);
             $rowc = mysqli_fetch_array($resc, MYSQLI_ASSOC);
@@ -704,62 +704,62 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
             $resc2 = mysqli_query($dbcon, $c2);
             $rowc2 = mysqli_fetch_array($resc2, MYSQLI_ASSOC);
             ?>
-        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-                    type="button" role="tab" aria-controls="pills-home" aria-selected="true">ความดีทั้งหมด <span
-                        class="badge bg-light text-dark">
-                        <?php echo $rowc['total']; ?>
-                    </span> </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-                    type="button" role="tab" aria-controls="pills-profile" aria-selected="false">รอการตรวจ <span
-                        class="badge bg-light text-dark">
-                        <?php echo $rowc1['wait']; ?>
-                    </span> </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact"
-                    type="button" role="tab" aria-controls="pills-contact" aria-selected="false">ตรวจแล้ว <span
-                        class="badge bg-light text-dark">
-                        <?php echo $rowc2['checked']; ?>
-                    </span> </button>
-            </li>
-        </ul>
-        <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <td class="text-center">หมายเลขบันทึก</td>
-                            <td class="text-center">ผู้บันทึก</td>
-                            <td class="text-center">สถานะตรวจ</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                        aria-selected="true">ความดีทั้งหมด <span class="badge bg-light text-dark">
+                            <?php echo $rowc['total']; ?>
+                        </span> </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                        aria-selected="false">รอการตรวจ <span class="badge bg-light text-dark">
+                            <?php echo $rowc1['wait']; ?>
+                        </span> </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact"
+                        aria-selected="false">ตรวจแล้ว <span class="badge bg-light text-dark">
+                            <?php echo $rowc2['checked']; ?>
+                        </span> </button>
+                </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <td class="text-center">หมายเลขบันทึก</td>
+                                <td class="text-center">ผู้บันทึก</td>
+                                <td class="text-center">สถานะตรวจ</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
                     $q = "SELECT * FROM grace ORDER BY grace_id DESC";
                     $resq = mysqli_query($dbcon, $q);
                     while ($rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC)) {
                     ?>
 
-                        <tr>
-                            <td class="text-center">
-                                <?php echo $rowq['grace_id']; ?>
-                            </td>
-                            <?php
+                            <tr>
+                                <td class="text-center">
+                                    <?php echo $rowq['grace_id']; ?>
+                                </td>
+                                <?php
                             $id_stu = $rowq['member_id'];
                             $m = "SELECT member_fname, member_lname FROM members WHERE member_id='$id_stu'";
                             $resm = mysqli_query($dbcon, $m);
                             $rowm = mysqli_fetch_array($resm, MYSQLI_ASSOC);
                             ?>
-                            <td class="text-center">
-                                <?php echo $rowm['member_fname'].' '.$rowm['member_lname']; ?>
-                            </td>
-                            <td class="text-center">
-                                <a href="?q=mview&g=<?php echo $rowq['grace_id']; ?>">
-                                    <?php
+                                <td class="text-center">
+                                    <?php echo $rowm['member_fname'].' '.$rowm['member_lname']; ?>
+                                </td>
+                                <td class="text-center">
+                                    <a href="?q=mview&g=<?php echo $rowq['grace_id']; ?>">
+                                        <?php
                                 if ($rowq['grace_check'] == 'รอการอนุมัติ'){
                                     echo "
                                     <span class='badge bg-secondary'>รอการตรวจ</span>
@@ -770,48 +770,48 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                                     ";
                                     }
                                     ?>
-                                </a>
-                            </td>
-                        </tr>
+                                    </a>
+                                </td>
+                            </tr>
 
-                        <?php
+                            <?php
                     }
                     ?>
-                    </tbody>
-                </table>
-            </div>
-            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
 
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <td class="text-center">หมายเลขบันทึก</td>
-                            <td class="text-center">ผู้บันทึก</td>
-                            <td class="text-center">สถานะตรวจ</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <td class="text-center">หมายเลขบันทึก</td>
+                                <td class="text-center">ผู้บันทึก</td>
+                                <td class="text-center">สถานะตรวจ</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
                     $q = "SELECT * FROM grace WHERE grace_check='รอการอนุมัติ' ORDER BY grace_id DESC";
                     $resq = mysqli_query($dbcon, $q);
                     while ($rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC)) {
                     ?>
-                        <tr>
-                            <td class="text-center">
-                                <?php echo $rowq['grace_id']; ?>
-                            </td>
-                            <?php
+                            <tr>
+                                <td class="text-center">
+                                    <?php echo $rowq['grace_id']; ?>
+                                </td>
+                                <?php
                             $id_stu = $rowq['member_id'];
                             $m = "SELECT member_fname, member_lname FROM members WHERE member_id='$id_stu'";
                             $resm = mysqli_query($dbcon, $m);
                             $rowm = mysqli_fetch_array($resm, MYSQLI_ASSOC);
                             ?>
-                            <td class="text-center">
-                                <?php echo $rowm['member_fname'].' '.$rowm['member_lname']; ?>
-                            </td>
-                            <td class="text-center">
-                                <a href="?q=mview&g=<?php echo $rowq['grace_id']; ?>">
-                                    <?php
+                                <td class="text-center">
+                                    <?php echo $rowm['member_fname'].' '.$rowm['member_lname']; ?>
+                                </td>
+                                <td class="text-center">
+                                    <a href="?q=mview&g=<?php echo $rowq['grace_id']; ?>">
+                                        <?php
                                 if ($rowq['grace_check'] == 'รอการอนุมัติ'){
                                     echo "
                                     <span class='badge bg-secondary'>รอการตรวจ</span>
@@ -822,48 +822,48 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                                     ";
                                     }
                                     ?>
-                                </a>
-                            </td>
-                        </tr>
-                        <?php
+                                    </a>
+                                </td>
+                            </tr>
+                            <?php
                     }
                     ?>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
 
-            </div>
-            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                </div>
+                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
 
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <td class="text-center">หมายเลขบันทึก</td>
-                            <td class="text-center">ผู้บันทึก</td>
-                            <td class="text-center">สถานะตรวจ</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <td class="text-center">หมายเลขบันทึก</td>
+                                <td class="text-center">ผู้บันทึก</td>
+                                <td class="text-center">สถานะตรวจ</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
                     $q = "SELECT * FROM grace WHERE grace_check!='รอการอนุมัติ' ORDER BY grace_id DESC";
                     $resq = mysqli_query($dbcon, $q);
                     while ($rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC)) {
                     ?>
-                        <tr>
-                            <td class="text-center">
-                                <?php echo $rowq['grace_id']; ?>
-                            </td>
-                            <?php
+                            <tr>
+                                <td class="text-center">
+                                    <?php echo $rowq['grace_id']; ?>
+                                </td>
+                                <?php
                             $id_stu = $rowq['member_id'];
                             $m = "SELECT member_fname, member_lname FROM members WHERE member_id='$id_stu'";
                             $resm = mysqli_query($dbcon, $m);
                             $rowm = mysqli_fetch_array($resm, MYSQLI_ASSOC);
                             ?>
-                            <td class="text-center">
-                                <?php echo $rowm['member_fname'].' '.$rowm['member_lname']; ?>
-                            </td>
-                            <td class="text-center">
-                                <a href="?q=mview&g=<?php echo $rowq['grace_id']; ?>">
-                                    <?php
+                                <td class="text-center">
+                                    <?php echo $rowm['member_fname'].' '.$rowm['member_lname']; ?>
+                                </td>
+                                <td class="text-center">
+                                    <a href="?q=mview&g=<?php echo $rowq['grace_id']; ?>">
+                                        <?php
                                 if ($rowq['grace_check'] == 'รอการอนุมัติ'){
                                     echo "
                                     <span class='badge bg-secondary'>รอการตรวจ</span>
@@ -874,38 +874,36 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                                     ";
                                     }
                                     ?>
-                                </a>
-                            </td>
-                        </tr>
-                        <?php
+                                    </a>
+                                </td>
+                            </tr>
+                            <?php
                     }
                     ?>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
 
+                </div>
             </div>
+
+
+            <br><br>
         </div>
-
-
-        <br><br>
-    </div>
-    <?php
+        <?php
         }
         ?>
 
-    <!--msrgrace-->
-    <?php
+        <!--Msrgrace-->
+        <?php
         if (isset($_GET['q']) && $_GET['q'] == 'msrgrace' && $_SESSION['level'] == 'teacher'){
         ?>
-    <div class="container">
-
-        <a href="?q=mgrace"><button class="btn btn-primary m-1">ตรวจบันทึกความดี</button></a>
-        <a href="?q=msocial"><button class="btn btn-success m-1">จัดการโพสต์</button></a>
-        <a href="?q=maccount"><button class="btn btn-info m-1">จัดการบัญชีนักเรียน</button></a>
-        <a href="?q=mreport"><button class="btn btn-warning m-1">จัดการรายงานปัญหา</button></a>
-
-        <br><br>
-        <form action="main.php" method="GET" class="row my-3">
+        <div class="container">
+            <a href="?q=mgrace"><button class="btn btn-primary m-1">ตรวจบันทึกความดี</button></a>
+            <a href="?q=msocial"><button class="btn btn-success m-1">จัดการโพสต์</button></a>
+            <a href="?q=maccount"><button class="btn btn-info m-1">จัดการบัญชีนักเรียน</button></a>
+            <a href="?q=mreport"><button class="btn btn-warning m-1">จัดการรายงานปัญหา</button></a>
+            <br><br>
+            <form action="main.php" method="GET" class="row my-3">
                 <input type="hidden" name="q" value="msrgrace">
                 <div class="col-auto">
                     <input type="text" class="form-control" placeholder="ค้นหา" name="key" required>
@@ -914,18 +912,20 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                     <button type="submit" class="btn btn-info"><i class="fas fa-search"></i></button>
                 </div>
             </form>
-        
-        <h3>ผลการค้นหา: <span class="text-primary"><?php echo $_GET['key']; ?></span></h3>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <td class="text-center">หมายเลขบันทึก</td>
-                    <td class="text-center">ผู้บันทึก</td>
-                    <td class="text-center">สถานะตรวจ</td>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
+
+            <h3>ผลการค้นหา: <span class="text-primary">
+                    <?php echo $_GET['key']; ?>
+                </span></h3>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td class="text-center">หมายเลขบันทึก</td>
+                        <td class="text-center">ผู้บันทึก</td>
+                        <td class="text-center">สถานะตรวจ</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
                 $key = '%'.$_GET['key'].'%';
             $q = "SELECT * FROM grace
             JOIN members
@@ -937,22 +937,22 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
             $resq = mysqli_query($dbcon, $q);
             while ($rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC)) {
             ?>
-                <tr>
-                    <td class="text-center">
-                        <?php echo $rowq['grace_id']; ?>
-                    </td>
-                    <?php
+                    <tr>
+                        <td class="text-center">
+                            <?php echo $rowq['grace_id']; ?>
+                        </td>
+                        <?php
                     $id_stu = $rowq['member_id'];
                     $m = "SELECT member_fname, member_lname FROM members WHERE member_id='$id_stu'";
                     $resm = mysqli_query($dbcon, $m);
                     $rowm = mysqli_fetch_array($resm, MYSQLI_ASSOC);
                     ?>
-                    <td class="text-center">
-                        <?php echo $rowm['member_fname'].' '.$rowm['member_lname']; ?>
-                    </td>
-                    <td class="text-center">
-                        <a href="?q=mview&g=<?php echo $rowq['grace_id']; ?>">
-                            <?php
+                        <td class="text-center">
+                            <?php echo $rowm['member_fname'].' '.$rowm['member_lname']; ?>
+                        </td>
+                        <td class="text-center">
+                            <a href="?q=mview&g=<?php echo $rowq['grace_id']; ?>">
+                                <?php
                         if ($rowq['grace_check'] == 'รอการอนุมัติ'){
                             echo "
                             <span class='badge bg-secondary'>รอการตรวจ</span>
@@ -963,27 +963,541 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                             ";
                             }
                             ?>
-                        </a>
-                    </td>
-                </tr>
-                <?php
+                            </a>
+                        </td>
+                    </tr>
+                    <?php
             }
             ?>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
 
-        <br><br>
-    </div>
-    <?php
+            <br><br>
+        </div>
+        <?php
         }
         ?>
 
-    <script type="text/javascript">
-        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-            return new bootstrap.Popover(popoverTriggerEl)
-        })
-    </script>
+        <!--Mview-->
+        <?php
+        if (isset($_GET['q']) && $_GET['q'] == 'mview' && $_SESSION['level'] == 'teacher'){
+        ?>
+        <div class="container">
+            <a href="?q=mgrace"><button class="btn btn-primary m-1">ตรวจบันทึกความดี</button></a>
+            <a href="?q=msocial"><button class="btn btn-success m-1">จัดการโพสต์</button></a>
+            <a href="?q=maccount"><button class="btn btn-info m-1">จัดการบัญชีนักเรียน</button></a>
+            <a href="?q=mreport"><button class="btn btn-warning m-1">จัดการรายงานปัญหา</button></a>
+            <br><br>
+            <?php
+            $id = $_GET['g'];
+            $q = "SELECT * FROM grace WHERE grace_id='$id'";
+            $resq = mysqli_query($dbcon, $q);
+            $rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC);
+
+            $uid = $rowq['member_id'];
+
+            $a = "SELECT * FROM members WHERE member_id='$uid'";
+            $resa = mysqli_query($dbcon, $a);
+            $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
+            ?>
+            <h3 class="text-center">หมายเลขบันทึก
+                <span class="text-primary">
+                    <?php echo $rowq['grace_id']; ?>
+                </span>
+            </h3><br>
+            <div class="col-lg-5 col-md-12 col-sm-12 mx-auto">
+                <a href="./grace/<?php echo $rowq['grace_img']; ?>" target="_blank">
+                    <img src="./grace/<?php echo $rowq['grace_img']; ?>" alt="" class="img-fluid rounded">
+                </a>
+            </div>
+            <br>
+            <div class="content mx-auto col-lg-8 col-md-12 col-sm-12">
+                <div class="text-secondary">
+                    <?php echo $rowq['grace_agency']; ?>
+                </div>
+                <p>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <?php echo $rowq['grace_detail']; ?>
+                </p>
+                <p class="text-end"">
+                    เป็นเวลา <?php echo date(" H:i", strtotime($rowq['grace_time'])); ?> ชั่วโมง เมื่อวันที่
+                    <?php echo date("d/m/Y", strtotime($rowq['grace_date'])); ?><br>
+                    โดย
+                    <a href="?q=mprofile&g=<?php echo $rowa['member_id']; ?>" style="text-decoration: none;">
+                        <?php echo $rowa['member_fname'].' '.$rowa['member_lname'] ?>
+                    </a>
+                </p>
+                <div class="text-center text-secondary">บันทึกเมื่อ
+                    <?php echo $rowq['grace_timestamp']; ?>
+                </div>
+                <br>
+                <form action="app.php?func=checking" method="POST" class="">
+                    <select name="status" id="" class="form-control" required>
+                        <option value="ผ่าน" <?php if ($rowq['grace_check']=='ผ่าน' ){ echo 'selected' ; } ?>>ผ่าน
+                        </option>
+                        <option value="ไม่ผ่าน" <?php if ($rowq['grace_check']=='ไม่ผ่าน' ){ echo 'selected' ; } ?>
+                            >ไม่ผ่าน</option>
+                        <option value="รอการอนุมัติ" <?php if ($rowq['grace_check']=='รอการอนุมัติ' ){ echo 'selected' ;
+                            } ?>>รอการตรวจ</option>
+                    </select>
+                    <input type="hidden" name="uid" id="" value="<?php echo $rowq['grace_id']; ?>">
+                    <p class="text-center my-3"><input type="submit" class="btn btn-info" value="อัปเดต"></p>
+                </form>
+
+                <p class="text-end">
+                    <a href="app.php?func=delmgrace&g=<?php echo $rowq['grace_id']; ?>"> <button
+                            class="btn btn-outline-danger">ลบ</button> </a>
+                    <a href="?q=msocialadd&g=<?php echo $rowq['grace_id']; ?>"> <button
+                            class="btn btn-success">เผยแพร่</button> </a>
+                </p>
+            </div>
+            <br><br>
+        </div>
+        <?php
+        }
+        ?>
+
+        <!--Msocial-->
+        <?php
+        if (isset($_GET['q']) && $_GET['q'] == 'msocialadd' && $_SESSION['level'] == 'teacher'){
+        ?>
+        <div class="container">
+            <a href="?q=mgrace"><button class="btn btn-primary m-1">ตรวจบันทึกความดี</button></a>
+            <a href="?q=msocial"><button class="btn btn-success m-1">จัดการโพสต์</button></a>
+            <a href="?q=maccount"><button class="btn btn-info m-1">จัดการบัญชีนักเรียน</button></a>
+            <a href="?q=mreport"><button class="btn btn-warning m-1">จัดการรายงานปัญหา</button></a>
+            <br><br>
+            <?php
+            $id = $_GET['g'];
+            $q = "SELECT * FROM grace WHERE grace_id='$id'";
+            $resq = mysqli_query($dbcon, $q);
+            $rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC);
+
+            $sid = $rowq['member_id'];
+            $a = "SELECT * FROM members WHERE member_id='$sid'";
+            $resa = mysqli_query($dbcon, $a);
+            $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
+            ?>
+            <div class="content col-lg-7 col-md-12 col-sm-12 mx-auto">
+                <p class="text-center">
+                    <a href="./grace/<?php echo $rowq['grace_img']; ?>" target="_blank">
+                        <img src="./grace/<?php echo $rowq['grace_img']; ?>" alt="" class="img-fluid rounded">
+                    </a>
+                </p>
+                <div class="text-secondary">
+                    <?php echo $rowq['grace_agency']; ?>
+                </div>
+                <p>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <?php echo $rowq['grace_detail']; ?>
+                </p>
+                <p class="text-end"">
+                    เป็นเวลา <?php echo date(" H:i", strtotime($rowq['grace_time'])); ?> ชั่วโมง เมื่อวันที่
+                    <?php echo date("d/m/Y", strtotime($rowq['grace_date'])); ?><br>
+                    โดย
+                    <a href="?q=mprofile&g=<?php echo $rowa['member_id']; ?>" style="text-decoration: none;">
+                        <?php echo $rowa['member_fname'].' '.$rowa['member_lname'] ?>
+                    </a>
+                </p>
+                <form action="app.php?func=socialadd" method="POST">
+                    <div class="form-floating">
+                        <textarea required name="detail" class="form-control" placeholder="เขียนโพสต์"
+                            id="floatingTextarea2" style="height: 100px"></textarea>
+                        <label for="floatingTextarea2">เขียนโพสต์</label>
+                    </div>
+                    <input type="hidden" name="img" value="<?php echo $rowq['grace_img']; ?>" id="">
+                    <input type="hidden" name="uid" value="<?php echo $uid; ?>" id="">
+                    <br>
+                    <p class="text-center"><input type="submit" class="btn btn-primary" value="เผยแพร่"></p>
+                </form>
+            </div>
+            <br><br>
+        </div>
+        <?php
+        }
+        ?>
+
+        <!--Msocial-->
+        <?php
+        if (isset($_GET['q']) && $_GET['q'] == 'msocial' && $_SESSION['level'] == 'teacher'){
+        ?>
+        <div class="container">
+            <a href="?q=mgrace"><button class="btn btn-primary m-1">ตรวจบันทึกความดี</button></a>
+            <a href="?q=msocial"><button class="btn btn-success m-1">จัดการโพสต์</button></a>
+            <a href="?q=maccount"><button class="btn btn-info m-1">จัดการบัญชีนักเรียน</button></a>
+            <a href="?q=mreport"><button class="btn btn-warning m-1">จัดการรายงานปัญหา</button></a>
+            <br><br>
+            <form action="main.php" method="GET" class="row my-3">
+                <input type="hidden" name="q" value="msrsocial">
+                <div class="col-auto">
+                    <input type="text" class="form-control" placeholder="ค้นหา" name="key" required>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-info"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td class="text-center">หมายเลขโพสต์</td>
+                        <td class="text-center">เวลา</td>
+                        <td class="text-center">Edit</td>
+                        <td class="text-center">View</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+            $q = "SELECT * FROM social ORDER BY social_id DESC"; 
+            $resq = mysqli_query($dbcon, $q);
+            while ($rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC)) {
+            ?>
+                    <tr>
+                        <td class="text-center">
+                            <?php echo $rowq['social_id']; ?>
+                        </td>
+                        <td class="text-center">
+                            เผยแพร่เมื่อ
+                            <?php echo $rowq['social_timestamp']; ?>
+                        </td>
+                        <td class="text-center">
+                            <a href="?q=msocialedit&g=<?php echo $rowq['social_id']; ?>">
+                                <button class="btn btn-secondary"><i class="fas fa-edit"></i></button>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a href="?q=social&g=<?php echo $rowq['social_id']; ?>">
+                                <button class="btn btn-info"><i class="fas fa-eye"></i></button>
+                            </a>
+                        </td>
+                    </tr>
+                    <?php
+            }
+            ?>
+                </tbody>
+            </table>
+
+            <br><br>
+        </div>
+        <?php
+        }
+        ?>
+
+        <!--Msocialedit-->
+        <?php
+        if (isset($_GET['q']) && $_GET['q'] == 'msocialedit' && $_SESSION['level'] == 'teacher'){
+        ?>
+        <div class="container">
+            <a href="?q=mgrace"><button class="btn btn-primary m-1">ตรวจบันทึกความดี</button></a>
+            <a href="?q=msocial"><button class="btn btn-success m-1">จัดการโพสต์</button></a>
+            <a href="?q=maccount"><button class="btn btn-info m-1">จัดการบัญชีนักเรียน</button></a>
+            <a href="?q=mreport"><button class="btn btn-warning m-1">จัดการรายงานปัญหา</button></a>
+            <br><br>
+            <?php
+            $id = $_GET['g'];
+            $q = "SELECT * FROM social WHERE social_id='$id'";
+            $resq = mysqli_query($dbcon, $q);
+            $rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC);
+            ?>
+            <h3 class="text-center my-3">หมายเลขโพสต์ <span class="text-primary">
+                    <?php echo $rowq['social_id']; ?>
+                </span></h3>
+            <p class="text-center col-lg-6 col-md-12 col-sm-12 mx-auto">
+                <a href="./grace/<?php echo $rowq['social_img']; ?>" target="_blank">
+                    <img src="./grace/<?php echo $rowq['social_img']; ?>" alt="" class="img-fluid rounded">
+                </a>
+            </p>
+            <div class="content col-lg-7 col-md-12 col-sm-12 mx-auto">
+                <form action="app.php?func=editsocial" method="POST">
+                    <div class="form-floating">
+                        <textarea required name="detail" class="form-control" placeholder="เขียนโพสต์"
+                            id="floatingTextarea2"
+                            style="height: 100px"><?php echo $rowq['social_detail']; ?></textarea>
+                        <label for="floatingTextarea2">เขียนโพสต์</label>
+                    </div>
+                    <input type="hidden" name="uid" value="<?php echo $rowq['social_id']; ?>">
+                    <p class="text-end my-1">เผยแพร่เมื่อ
+                        <?php echo $rowq['social_timestamp']; ?>
+                    </p>
+                    <p class="text-center"><input type="submit" class="btn btn-info" value="อัปเดต"></p>
+                </form>
+                <p class="text-end">
+                    <a href="app.php?func=delsocial&g=<?php echo $rowq['social_id']; ?>">
+                        <button class="btn btn-outline-danger">ลบ</button>
+                </p>
+                </a>
+            </div>
+
+            <br><br>
+        </div>
+        <?php
+        }
+        ?>
+
+        <!--Msrsocial-->
+        <?php
+        if (isset($_GET['q']) && $_GET['q'] == 'msrsocial' && $_SESSION['level'] == 'teacher'){
+        ?>
+        <div class="container">
+            <a href="?q=mgrace"><button class="btn btn-primary m-1">ตรวจบันทึกความดี</button></a>
+            <a href="?q=msocial"><button class="btn btn-success m-1">จัดการโพสต์</button></a>
+            <a href="?q=maccount"><button class="btn btn-info m-1">จัดการบัญชีนักเรียน</button></a>
+            <a href="?q=mreport"><button class="btn btn-warning m-1">จัดการรายงานปัญหา</button></a>
+            <br><br>
+            <form action="main.php" method="GET" class="row my-3">
+                <input type="hidden" name="q" value="msrsocial">
+                <div class="col-auto">
+                    <input type="text" class="form-control" placeholder="ค้นหา" name="key" required>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-info"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+
+            <h3>ผลการค้นหา: <span class="text-primary">
+                    <?php echo $_GET['key']; ?>
+                </span></h3>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td class="text-center">หมายเลขโพสต์</td>
+                        <td class="text-center">เวลา</td>
+                        <td class="text-center">Edit</td>
+                        <td class="text-center">View</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        $key = '%'.$_GET['key'].'%';
+                        $q = "SELECT * FROM social
+                        WHERE social_id LIKE '$key'
+                        ORDER BY social_id DESC";
+                        $resq = mysqli_query($dbcon, $q);
+                        while ($rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC)) {
+                ?>
+                    <tr>
+                        <td class="text-center">
+                            <?php echo $rowq['social_id']; ?>
+                        </td>
+                        <td class="text-center">
+                            เผยแพร่เมื่อ
+                            <?php echo $rowq['social_timestamp']; ?>
+                        </td>
+                        <td class="text-center">
+                            <a href="?q=msocialedit&g=<?php echo $rowq['social_id']; ?>">
+                                <button class="btn btn-secondary"><i class="fas fa-edit"></i></button>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a href="?q=social&g=<?php echo $rowq['social_id']; ?>">
+                                <button class="btn btn-info"><i class="fas fa-eye"></i></button>
+                            </a>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
+                </tbody>
+            </table>
+            <br><br>
+        </div>
+        <?php
+        }
+        ?>
+
+        <!--Maccount-->
+        <?php
+        if (isset($_GET['q']) && $_GET['q'] == 'maccount' && $_SESSION['level'] == 'teacher'){
+        ?>
+        <div class="container">
+            <a href="?q=mgrace"><button class="btn btn-primary m-1">ตรวจบันทึกความดี</button></a>
+            <a href="?q=msocial"><button class="btn btn-success m-1">จัดการโพสต์</button></a>
+            <a href="?q=maccount"><button class="btn btn-info m-1">จัดการบัญชีนักเรียน</button></a>
+            <a href="?q=mreport"><button class="btn btn-warning m-1">จัดการรายงานปัญหา</button></a>
+
+            <br><br>
+            <form action="main.php" method="GET" class="row my-3">
+                <input type="hidden" name="q" value="msraccount">
+                <div class="col-auto">
+                    <input type="text" class="form-control" placeholder="ค้นหา" name="key" required>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-info"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td class="text-center">หมายเลขบัญชี</td>
+                        <td class="text-center">ชื่อ - นามสกุล</td>
+                        <td class="text-center">Option</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        $q = "SELECT * FROM members ORDER BY member_id ASC";
+                        $resq = mysqli_query($dbcon, $q);
+                        while ($rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC)) {
+                ?>
+                    <tr>
+                        <td class="text-center">
+                            <?php echo $rowq['member_id']; ?>
+                        </td>
+                        <td class="text-center">
+                            <?php echo $rowq['member_fname'].' '.$rowq['member_lname']; ?>
+                        </td>
+                        <td class="text-center">
+                            <a href="?q=account&g=<?php echo $rowq['member_id']; ?>">
+                                <button class="btn btn-secondary"><i class="fas fa-eye"></i></button>
+                            </a>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
+                </tbody>
+            </table>
+        </div>
+        <?php
+        }
+        ?>
+
+        <!--Account-->
+        <?php
+        if (isset($_GET['q']) && $_GET['q'] == 'account' && $_SESSION['level'] == 'teacher'){
+        ?>
+        <div class="container">
+            <a href="?q=mgrace"><button class="btn btn-primary m-1">ตรวจบันทึกความดี</button></a>
+            <a href="?q=msocial"><button class="btn btn-success m-1">จัดการโพสต์</button></a>
+            <a href="?q=maccount"><button class="btn btn-info m-1">จัดการบัญชีนักเรียน</button></a>
+            <a href="?q=mreport"><button class="btn btn-warning m-1">จัดการรายงานปัญหา</button></a>
+            <br><br>
+            <?php
+            $id = $_GET['g'];
+            $a = "SELECT * FROM members WHERE member_id='$id'";
+            $resa = mysqli_query($dbcon, $a);
+            $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
+            ?>
+            <p class="text-center">
+                <a href="./student/<?php echo $rowa['member_img']; ?>" target="_blank"><img
+                        src="./student/<?php echo $rowa['member_img']; ?>" class="img-fluid"
+                        style="border-radius: 8px; width: 25%;" alt=""></a>
+            </p>
+            <div class="content mx-auto col-lg-7 col-md-12 col-sm-12">
+                <h3>ผู้ใช้หมายเลข <span class="text-primary"><?php echo $rowa['member_id']; ?></span></h3>
+                <form action="app.php?func=profile" method="POST">
+                    <label for="id">รหัสนักเรียน</label>
+                    <input type="text" class="form-control" name="id" value="<?php echo $rowa['member_user']; ?>"
+                        placeholder="รหัสนักเรียน" maxlength="10" required>
+                    <div class="row g-2">
+                        <div class="col">
+                            <label for="fname">ชื่อ</label>
+                            <input type="text" class="form-control" name="fname"
+                                value="<?php echo $rowa['member_fname']; ?>" placeholder="ชื่อ" maxlength="30" required>
+                        </div>
+                        <div class="col">
+                            <label for="lname">นามสกุล</label>
+                            <input type="text" class="form-control" name="lname"
+                                value="<?php echo $rowa['member_lname']; ?>" placeholder="นามสกุล" maxlength="30" required>
+                        </div>
+                    </div>
+                    <label for="class">ห้องเรียน</label>
+                    <input type="text" class="form-control" name="class" value="<?php echo $rowa['member_class']; ?>"
+                        placeholder="ห้องเรียน" maxlength="5" required>
+                    <label for="no">เลขที่</label>
+                    <input type="number" class="form-control" name="no" value="<?php echo $rowa['member_no']; ?>"
+                        placeholder="เลขที่" min="1" max="99" required>
+                    <label for="dob">วัน/เดือน/ปี เกิด</label>
+                    <input type="date" class="form-control" name="dob" value="<?php echo $rowa['member_dob']; ?>"
+                        placeholder="วัน/เดือน/ปี เกิด" required>
+                    <label for="address">ที่อยู่</label>
+                    <input type="text" class="form-control" name="address" value="<?php echo $rowa['member_address']; ?>"
+                        placeholder="ที่อยู่" required>
+                    <br>
+                    <p class="text-center">
+                        <a href="app.php?func=delaccount&g=<?php echo $rowa['member_id']; ?>">
+                        <input type="button" class="btn btn-outline-danger" value="ลบ">
+                        </a>
+                    </p>
+                </form>
+            </div>
+            <br><br>
+        </div>
+        <?php
+        }
+        ?>
+
+        <!--Msraccount-->
+        <?php
+        if (isset($_GET['q']) && $_GET['q'] == 'msraccount' && $_SESSION['level'] == 'teacher'){
+        ?>
+        <div class="container">
+            <a href="?q=mgrace"><button class="btn btn-primary m-1">ตรวจบันทึกความดี</button></a>
+            <a href="?q=msocial"><button class="btn btn-success m-1">จัดการโพสต์</button></a>
+            <a href="?q=maccount"><button class="btn btn-info m-1">จัดการบัญชีนักเรียน</button></a>
+            <a href="?q=mreport"><button class="btn btn-warning m-1">จัดการรายงานปัญหา</button></a>
+
+            <br><br>
+            <form action="main.php" method="GET" class="row my-3">
+                <input type="hidden" name="q" value="msraccount">
+                <div class="col-auto">
+                    <input type="text" class="form-control" placeholder="ค้นหา" name="key" required>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-info"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+
+            <h3>ผลการค้นหา: <span class="text-primary">
+                <?php echo $_GET['key']; ?>
+            </span></h3>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td class="text-center">หมายเลขบัญชี</td>
+                        <td class="text-center">ชื่อ - นามสกุล</td>
+                        <td class="text-center">Option</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        $key = '%'.$_GET['key'].'%';
+                        $q = "SELECT * FROM members
+                        WHERE member_fname LIKE '$key'
+                        OR member_lname LIKE '$key'
+                        OR member_id LIKE '$key'
+                        ORDER BY member_id ASC";
+                        $resq = mysqli_query($dbcon, $q);
+                        while ($rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC)) {
+                ?>
+                    <tr>
+                        <td class="text-center">
+                            <?php echo $rowq['member_id']; ?>
+                        </td>
+                        <td class="text-center">
+                            <?php echo $rowq['member_fname'].' '.$rowq['member_lname']; ?>
+                        </td>
+                        <td class="text-center">
+                            <a href="?q=account&g=<?php echo $rowq['member_id']; ?>">
+                                <button class="btn btn-secondary"><i class="fas fa-eye"></i></button>
+                            </a>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
+                </tbody>
+            </table>
+        </div>
+        <?php
+        }
+        ?>
+
+        <script type="text/javascript">
+            var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+            var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+                return new bootstrap.Popover(popoverTriggerEl)
+            })
+        </script>
 </body>
 
 </html>

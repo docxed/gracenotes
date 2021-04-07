@@ -12,7 +12,20 @@
             profile();
         }elseif ($_GET['func'] == 'report') {
             report();
+        }elseif ($_GET['func'] == 'checking') {
+            checking();
+        }elseif ($_GET['func'] == 'delmgrace') {
+            delmgrace();
+        }elseif ($_GET['func'] == 'socialadd') {
+            socialadd();
+        }elseif ($_GET['func'] == 'editsocial') {
+            editsocial();
+        }elseif ($_GET['func'] == 'delsocial') {
+            delsocial();
+        }elseif ($_GET['func'] == 'delaccount') {
+            delaccount();
         }
+        
     }
 
     function register(){
@@ -177,6 +190,118 @@
             echo "<script>";
             echo "alert('ดำเนินการสำเร็จ');";
             echo "window.location.href='main.php?q=report';";
+            echo "</script>";
+        }else{
+            echo "<script>";
+            echo "alert('เกิดข้อผิดพลาดในขณะนี้');";
+            echo "window.location.href='index.php';";
+            echo "</script>";
+        }
+    }
+
+    function checking(){
+        require 'connection.php';
+        $uid = $_POST['uid'];
+        $status = $_POST['status'];
+        $q = "UPDATE grace SET grace_check='$status' WHERE grace_id='$uid'";
+        $resq = mysqli_query($dbcon, $q);
+        if($resq){
+            echo "<script>";
+            echo "alert('ดำเนินการสำเร็จ');";
+            echo "window.location.href='main.php?q=mview&g=$uid';";
+            echo "</script>";
+        }else{
+            echo "<script>";
+            echo "alert('เกิดข้อผิดพลาดในขณะนี้');";
+            echo "window.location.href='index.php';";
+            echo "</script>";
+        }
+    }
+
+    function delmgrace(){
+        require 'connection.php';
+        $uid = $_GET['g'];
+        $q = "DELETE FROM grace WHERE grace_id='$uid'";
+        $resq = mysqli_query($dbcon, $q);
+        if($resq){
+            echo "<script>";
+            echo "alert('ดำเนินการสำเร็จ');";
+            echo "window.location.href='main.php?q=mgrace';";
+            echo "</script>";
+        }else{
+            echo "<script>";
+            echo "alert('เกิดข้อผิดพลาดในขณะนี้');";
+            echo "window.location.href='index.php';";
+            echo "</script>";
+        }
+    }
+
+    function socialadd(){
+        require 'connection.php';
+        $uid = $_POST['uid'];
+        $img = $_POST['img'];
+        $detail = $_POST['detail'];
+        $q = "INSERT INTO social (social_detail, social_img, member_id) VALUES ('$detail', '$img', '$uid')";
+        $resq = mysqli_query($dbcon, $q);
+        if($resq){
+            echo "<script>";
+            echo "alert('ดำเนินการสำเร็จ');";
+            echo "window.location.href='main.php?q=msocial';";
+            echo "</script>";
+        }else{
+            echo "<script>";
+            echo "alert('เกิดข้อผิดพลาดในขณะนี้');";
+            echo "window.location.href='index.php';";
+            echo "</script>";
+        }
+    }
+
+    function editsocial(){
+        require 'connection.php';
+        $uid = $_POST['uid'];
+        $detail = $_POST['detail'];
+        $q = "UPDATE social SET social_detail='$detail' WHERE social_id='$uid'";
+        $resq = mysqli_query($dbcon, $q);
+        if($resq){
+            echo "<script>";
+            echo "alert('ดำเนินการสำเร็จ');";
+            echo "window.location.href='main.php?q=msocialedit&g=$uid';";
+            echo "</script>";
+        }else{
+            echo "<script>";
+            echo "alert('เกิดข้อผิดพลาดในขณะนี้');";
+            echo "window.location.href='index.php';";
+            echo "</script>";
+        }
+    }
+
+    function delsocial(){
+        require 'connection.php';
+        $uid = $_GET['g'];
+        $q = "DELETE FROM social WHERE social_id='$uid'";
+        $resq = mysqli_query($dbcon, $q);
+        if($resq){
+            echo "<script>";
+            echo "alert('ดำเนินการสำเร็จ');";
+            echo "window.location.href='main.php?q=msocial';";
+            echo "</script>";
+        }else{
+            echo "<script>";
+            echo "alert('เกิดข้อผิดพลาดในขณะนี้');";
+            echo "window.location.href='index.php';";
+            echo "</script>";
+        }
+    }
+
+    function delaccount(){
+        require 'connection.php';
+        $uid = $_GET['g'];
+        $q = "DELETE FROM members WHERE member_id='$uid'";
+        $resq = mysqli_query($dbcon, $q);
+        if($resq){
+            echo "<script>";
+            echo "alert('ดำเนินการสำเร็จ');";
+            echo "window.location.href='main.php?q=maccount';";
             echo "</script>";
         }else{
             echo "<script>";
