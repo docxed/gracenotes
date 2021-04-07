@@ -24,6 +24,14 @@
             delsocial();
         }elseif ($_GET['func'] == 'delaccount') {
             delaccount();
+        }elseif ($_GET['func'] == 'replyadd') {
+            replyadd();
+        }elseif ($_GET['func'] == 'commentadd') {
+            commentadd();
+        }elseif ($_GET['func'] == 'delcomment') {
+            delcomment();
+        }elseif ($_GET['func'] == 'likeadd') {
+            likeadd();
         }
         
     }
@@ -303,6 +311,93 @@
             echo "alert('ดำเนินการสำเร็จ');";
             echo "window.location.href='main.php?q=maccount';";
             echo "</script>";
+        }else{
+            echo "<script>";
+            echo "alert('เกิดข้อผิดพลาดในขณะนี้');";
+            echo "window.location.href='index.php';";
+            echo "</script>";
+        }
+    }
+
+    function replyadd(){
+        require 'connection.php';
+        $detail = $_POST['detail'];
+        $uid = $_POST['uid'];
+        $sid = $_POST['sid'];
+        $q = "INSERT INTO report_feedback (reply_detail, member_id, report_id) VALUES ('$detail', '$uid', '$sid')";
+        $resq = mysqli_query($dbcon, $q);
+        if($resq){
+            echo "<script>";
+            echo "alert('ดำเนินการสำเร็จ');";
+            echo "window.location.href='main.php?q=reply&g=$sid';";
+            echo "</script>";
+        }else{
+            echo "<script>";
+            echo "alert('เกิดข้อผิดพลาดในขณะนี้');";
+            echo "window.location.href='index.php';";
+            echo "</script>";
+        }
+    }
+
+    function commentadd(){
+        require 'connection.php';
+        $detail = $_POST['comment'];
+        $uid = $_POST['uid'];
+        $sid = $_POST['sid'];
+        $q = "INSERT INTO comment (comment_detail, member_id, social_id) VALUES ('$detail', '$uid', '$sid')";
+        $resq = mysqli_query($dbcon, $q);
+        if($resq){
+            echo "<script>";
+            echo "alert('ดำเนินการสำเร็จ');";
+            echo "window.location.href='main.php?q=social&g=$sid';";
+            echo "</script>";
+        }else{
+            echo "<script>";
+            echo "alert('เกิดข้อผิดพลาดในขณะนี้');";
+            echo "window.location.href='index.php';";
+            echo "</script>";
+        }
+    }
+
+    function delcomment(){
+        require 'connection.php';
+        $uid = $_GET['g'];
+        $sid = $_GET['s'];
+        $q = "DELETE FROM comment WHERE comment_id='$uid'";
+        $resq = mysqli_query($dbcon, $q);
+        if($resq){
+            echo "<script>";
+            echo "alert('ดำเนินการสำเร็จ');";
+            echo "window.location.href='main.php?q=social&g=$sid';";
+            echo "</script>";
+        }else{
+            echo "<script>";
+            echo "alert('เกิดข้อผิดพลาดในขณะนี้');";
+            echo "window.location.href='index.php';";
+            echo "</script>";
+        }
+    }
+    function likeadd(){
+        require 'connection.php';
+        $type = $_GET['type'];
+        $uid = $_GET['uid'];
+        $sid = $_GET['sid'];
+        $q1 = "DELETE FROM `status` WHERE social_id='$sid' AND member_id='$uid'";
+        $resq1 = mysqli_query($dbcon, $q1);
+        if($resq1){
+            $q2 = "INSERT INTO `status` (status_type, member_id, social_id) VALUES ('$type', '$uid', '$sid')";
+            $resq2 = mysqli_query($dbcon, $q2);
+            if($resq2){
+                echo "<script>";
+                echo "alert('ดำเนินการสำเร็จ');";
+                echo "window.location.href='main.php?q=social&g=$sid';";
+                echo "</script>";
+            }else{
+                echo "<script>";
+                echo "alert('เกิดข้อผิดพลาดในขณะนี้');";
+                echo "window.location.href='index.php';";
+                echo "</script>";
+            }
         }else{
             echo "<script>";
             echo "alert('เกิดข้อผิดพลาดในขณะนี้');";

@@ -112,7 +112,200 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
     ?>
     <div class="container">
         <h3>ความดี ล่าสุด</h3>
-        <br><br>
+        <br>
+        <?php
+        $q = "SELECT * FROM social ORDER BY social_id DESC";
+        $resq = mysqli_query($dbcon, $q);
+        while ($rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC)) {
+        ?>
+
+        <div class="card mx-auto col-sm-12 col-md-6 col-lg-5 my-5">
+            <div class="card-body">
+                <br>
+                <p style="font-size: x-large;">
+                    <?php echo $rowq['social_detail']; ?>
+                </p>
+                <br>
+            </div>
+            <a href="?q=social&g=<?php echo $rowq['social_id']; ?>">
+                <img src="grace/<?php echo $rowq['social_img']; ?>" class="rounded card-img-bottom">
+            </a>
+        </div>
+
+        <?php
+      }
+    ?>
+        <br>
+    </div>
+    <?php
+      }
+    ?>
+
+    <!--SocialView-->
+    <?php
+      if (isset($_GET['q']) && $_GET['q'] == 'social'){
+    ?>
+    <div class="container">
+        <h3>ความดี ล่าสุด</h3>
+        <br>
+        <?php
+        $id = $_GET['g'];
+        $q = "SELECT * FROM social WHERE social_id='$id'";
+        $resq = mysqli_query($dbcon, $q);
+        $rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC);
+        ?>
+
+        <div class="card mx-auto col-sm-12 col-md-6 col-lg-6 my-3">
+            <div class="card-body">
+                <br>
+                <p style="font-size: x-large;">
+                    <?php echo $rowq['social_detail']; ?>
+                </p>
+                <p class="text-end"">
+                     วันที่ <?php echo date(" d/m/Y", strtotime($rowq['social_timestamp'])); ?> เวลา
+                    <?php echo date(" H:i", strtotime($rowq['social_timestamp'])); ?>
+                </p>
+            </div>
+            <a href="./grace/<?php echo $rowq['social_img']; ?>" target="_blank">
+                <img src="grace/<?php echo $rowq['social_img']; ?>" class="rounded card-img-bottom">
+            </a>
+        </div>
+        <?php
+        $c1 = "SELECT COUNT(status_id) AS c1 FROM status WHERE social_id='$id' AND status_type='like'";
+        $resc1 = mysqli_query($dbcon, $c1);
+        $rowc1 = mysqli_fetch_array($resc1, MYSQLI_ASSOC);
+
+        $c2 = "SELECT COUNT(status_id) AS c2 FROM status WHERE social_id='$id' AND status_type='love'";
+        $resc2 = mysqli_query($dbcon, $c2);
+        $rowc2 = mysqli_fetch_array($resc2, MYSQLI_ASSOC);
+
+        $c3 = "SELECT COUNT(status_id) AS c3 FROM status WHERE social_id='$id' AND status_type='sadu'";
+        $resc3 = mysqli_query($dbcon, $c3);
+        $rowc3 = mysqli_fetch_array($resc3, MYSQLI_ASSOC);
+
+        $c11 = "SELECT COUNT(status_id) AS c11 FROM status WHERE social_id='$id' AND status_type='like' AND member_id='$uid'";
+        $resc11 = mysqli_query($dbcon, $c11);
+        $rowc11 = mysqli_fetch_array($resc11, MYSQLI_ASSOC);
+
+        $c22 = "SELECT COUNT(status_id) AS c22 FROM status WHERE social_id='$id' AND status_type='love' AND member_id='$uid'";
+        $resc22 = mysqli_query($dbcon, $c22);
+        $rowc22 = mysqli_fetch_array($resc22, MYSQLI_ASSOC);
+
+        $c33 = "SELECT COUNT(status_id) AS c33 FROM status WHERE social_id='$id' AND status_type='sadu' AND member_id='$uid'";
+        $resc33 = mysqli_query($dbcon, $c33);
+        $rowc33 = mysqli_fetch_array($resc33, MYSQLI_ASSOC);
+        ?>
+        <div class="mx-auto text-center col-sm-12 col-md-6 col-lg-6 my-3">
+            <?php
+            if ($rowc11['c11'] == 1){
+            ?>
+            <span class="text-primary"><i class="fas fa-lg fa-thumbs-up m-3"></i>
+                <?php echo $rowc1['c1']; ?>
+            </span>
+            <?php
+            }else{
+            ?>
+            <a href="app.php?func=likeadd&type=like&uid=<?php echo $uid; ?>&sid=<?php echo $id; ?>" style="text-decoration: none;">
+                <span class="text-dark">
+                    <i class="fas fa-lg fa-thumbs-up m-3"></i>
+            </a>
+            <?php echo $rowc1['c1']; ?>
+            </span>
+            <?php
+            }
+            ?>
+
+            <?php
+            if ($rowc22['c22'] == 1){
+            ?>
+            <span class="text-danger"><i class="fas fa-lg fa-heart m-3"></i>
+                <?php echo $rowc2['c2']; ?>
+            </span>
+            <?php
+            }else{
+            ?>
+            <a href="app.php?func=likeadd&type=love&uid=<?php echo $uid; ?>&sid=<?php echo $id; ?>" style="text-decoration: none;">
+                <span class="text-dark">
+                    <i class="fas fa-lg fa-heart m-3"></i>
+            </a>
+            <?php echo $rowc2['c2']; ?>
+            </span>
+            <?php
+            }
+            ?>
+
+            <?php
+            if ($rowc33['c33'] == 1){
+            ?>
+            <span class="text-warning"><i class="fas fa-lg fa-smile-beam m-3"></i>
+                <?php echo $rowc3['c3']; ?>
+            </span>
+            <?php
+            }else{
+            ?>
+            <a href="app.php?func=likeadd&type=sadu&uid=<?php echo $uid; ?>&sid=<?php echo $id; ?>" style="text-decoration: none;">
+                <span class="text-dark">
+                    <i class="fas fa-lg fa-smile-beam m-3"></i>
+            </a>
+            <?php echo $rowc3['c3']; ?>
+            </span>
+            <?php
+            }
+            ?>
+
+        </div>
+
+        <div class="text-center">
+            <form action="app.php?func=commentadd" method="POST" class="row">
+                <div class="col-7 ms-auto">
+                    <input type="text" class="form-control" required name="comment" placeholder="เขียนความคิดเห็น">
+                </div>
+                <input type="hidden" name="sid" value="<?php echo $rowq['social_id']; ?>" id="">
+                <input type="hidden" name="uid" value="<?php echo $uid; ?>" id="">
+                <div class="col-auto me-auto">
+                    <input type="submit" class="btn btn-outline-primary" value="ส่ง">
+                </div>
+            </form>
+        </div>
+        <?php
+        $a = "SELECT * FROM comment WHERE social_id='$id' ORDER BY comment_id DESC";
+        $resa = mysqli_query($dbcon, $a);
+        while ($rowq = mysqli_fetch_array($resa, MYSQLI_ASSOC)) {
+        ?>
+        <div class="content mx-auto my-3 col-lg-7 col-md-12 col-sm-12">
+            <div class="d-flex">
+                <div>
+                    <?php echo $rowq['comment_detail']; ?>
+                </div>
+                <div class="ms-auto">
+                    <?php
+                    if ($_SESSION['level'] == 'teacher'){
+                    ?>
+                    <a href="app.php?func=delcomment&g=<?php echo $rowq['comment_id']; ?>&s=<?php echo $id; ?>"><button
+                            class="btn btn-sm btn-outline-danger">ลบ</button></a>
+                    <?php
+                    }
+                    ?>
+                </div>
+            </div>
+            <div class="text-end text-secondary">
+                <?php echo $rowq['comment_timestamp']; ?>
+            </div>
+            <?php
+            $sid = $rowq['member_id'];
+            $e = "SELECT member_fname, member_lname FROM members WHERE member_id='$sid'";
+            $rese = mysqli_query($dbcon, $e);
+            $rowe = mysqli_fetch_array($rese, MYSQLI_ASSOC);
+            ?>
+            <div class="text-end">
+                <?php echo $rowe['member_fname'].' '.$rowe['member_lname']; ?>
+            </div>
+        </div>
+        <?php
+      }
+    ?>
+
+        <br>
     </div>
     <?php
       }
@@ -1334,7 +1527,7 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                 </thead>
                 <tbody>
                     <?php
-                        $q = "SELECT * FROM members ORDER BY member_id ASC";
+                        $q = "SELECT * FROM members WHERE member_level='student' ORDER BY member_id ASC";
                         $resq = mysqli_query($dbcon, $q);
                         while ($rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC)) {
                 ?>
@@ -1383,7 +1576,9 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                         style="border-radius: 8px; width: 25%;" alt=""></a>
             </p>
             <div class="content mx-auto col-lg-7 col-md-12 col-sm-12">
-                <h3>ผู้ใช้หมายเลข <span class="text-primary"><?php echo $rowa['member_id']; ?></span></h3>
+                <h3>ผู้ใช้หมายเลข <span class="text-primary">
+                        <?php echo $rowa['member_id']; ?>
+                    </span></h3>
                 <form action="app.php?func=profile" method="POST">
                     <label for="id">รหัสนักเรียน</label>
                     <input type="text" class="form-control" name="id" value="<?php echo $rowa['member_user']; ?>"
@@ -1397,7 +1592,8 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                         <div class="col">
                             <label for="lname">นามสกุล</label>
                             <input type="text" class="form-control" name="lname"
-                                value="<?php echo $rowa['member_lname']; ?>" placeholder="นามสกุล" maxlength="30" required>
+                                value="<?php echo $rowa['member_lname']; ?>" placeholder="นามสกุล" maxlength="30"
+                                required>
                         </div>
                     </div>
                     <label for="class">ห้องเรียน</label>
@@ -1410,12 +1606,12 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                     <input type="date" class="form-control" name="dob" value="<?php echo $rowa['member_dob']; ?>"
                         placeholder="วัน/เดือน/ปี เกิด" required>
                     <label for="address">ที่อยู่</label>
-                    <input type="text" class="form-control" name="address" value="<?php echo $rowa['member_address']; ?>"
-                        placeholder="ที่อยู่" required>
+                    <input type="text" class="form-control" name="address"
+                        value="<?php echo $rowa['member_address']; ?>" placeholder="ที่อยู่" required>
                     <br>
                     <p class="text-center">
                         <a href="app.php?func=delaccount&g=<?php echo $rowa['member_id']; ?>">
-                        <input type="button" class="btn btn-outline-danger" value="ลบ">
+                            <input type="button" class="btn btn-outline-danger" value="ลบ">
                         </a>
                     </p>
                 </form>
@@ -1448,8 +1644,8 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
             </form>
 
             <h3>ผลการค้นหา: <span class="text-primary">
-                <?php echo $_GET['key']; ?>
-            </span></h3>
+                    <?php echo $_GET['key']; ?>
+                </span></h3>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -1487,6 +1683,214 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                 ?>
                 </tbody>
             </table>
+        </div>
+        <?php
+        }
+        ?>
+
+        <!--Mreport-->
+        <?php
+        if (isset($_GET['q']) && $_GET['q'] == 'mreport' && $_SESSION['level'] == 'teacher'){
+        ?>
+        <div class="container">
+            <a href="?q=mgrace"><button class="btn btn-primary m-1">ตรวจบันทึกความดี</button></a>
+            <a href="?q=msocial"><button class="btn btn-success m-1">จัดการโพสต์</button></a>
+            <a href="?q=maccount"><button class="btn btn-info m-1">จัดการบัญชีนักเรียน</button></a>
+            <a href="?q=mreport"><button class="btn btn-warning m-1">จัดการรายงานปัญหา</button></a>
+
+            <br><br>
+            <form action="main.php" method="GET" class="row my-3">
+                <input type="hidden" name="q" value="msrreport">
+                <div class="col-auto">
+                    <input type="text" class="form-control" placeholder="ค้นหา" name="key" required>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-info"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td class="text-center">หมายเลกระทู้</td>
+                        <td class="text-center">หัวข้อ</td>
+                        <td class="text-center">สถานะ</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        $q = "SELECT * FROM report ORDER BY report_id DESC";
+                        $resq = mysqli_query($dbcon, $q);
+                        while ($rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC)) {
+                ?>
+                    <tr>
+                        <td class="text-center">
+                            <?php echo $rowq['report_id']; ?>
+                        </td>
+                        <td class="text-center">
+                            <?php echo $rowq['report_topic']; ?>
+                        </td>
+                        <td class="text-center">
+                            <a href="?q=reply&g=<?php echo $rowq['report_id']; ?>">
+                                <?php
+                            $id = $rowq['report_id'];
+                            $a = "SELECT COUNT(reply_id) AS feedback FROM report_feedback WHERE report_id='$id'";
+                            $resa = mysqli_query($dbcon, $a);
+                            $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
+                            if ($rowa['feedback'] == 0){
+                            ?>
+                                <span class="badge bg-secondary">รอการตอบกลับ</span>
+                                <?php
+                            }else{
+                            ?>
+                                <span class="badge bg-success">ตอบกลับแล้ว</span>
+                                <?php
+                            }
+                            ?>
+                            </a>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
+                </tbody>
+            </table>
+        </div>
+        <?php
+        }
+        ?>
+
+        <!--Msrreport-->
+        <?php
+        if (isset($_GET['q']) && $_GET['q'] == 'msrreport' && $_SESSION['level'] == 'teacher'){
+        ?>
+        <div class="container">
+            <a href="?q=mgrace"><button class="btn btn-primary m-1">ตรวจบันทึกความดี</button></a>
+            <a href="?q=msocial"><button class="btn btn-success m-1">จัดการโพสต์</button></a>
+            <a href="?q=maccount"><button class="btn btn-info m-1">จัดการบัญชีนักเรียน</button></a>
+            <a href="?q=mreport"><button class="btn btn-warning m-1">จัดการรายงานปัญหา</button></a>
+
+            <br><br>
+            <form action="main.php" method="GET" class="row my-3">
+                <input type="hidden" name="q" value="msrreport">
+                <div class="col-auto">
+                    <input type="text" class="form-control" placeholder="ค้นหา" name="key" required>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-info"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+            <h3>ผลการค้นหา: <span class="text-primary">
+                    <?php echo $_GET['key']; ?>
+                </span></h3>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td class="text-center">หมายเลกระทู้</td>
+                        <td class="text-center">หัวข้อ</td>
+                        <td class="text-center">สถานะ</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        $key = '%'.$_GET['key'].'%';
+                        $q = "SELECT * FROM report WHERE report_topic LIKE '$key' ORDER BY report_id DESC";
+                        $resq = mysqli_query($dbcon, $q);
+                        while ($rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC)) {
+                ?>
+                    <tr>
+                        <td class="text-center">
+                            <?php echo $rowq['report_id']; ?>
+                        </td>
+                        <td class="text-center">
+                            <?php echo $rowq['report_topic']; ?>
+                        </td>
+                        <td class="text-center">
+                            <a href="?q=reply&g=<?php echo $rowq['report_id']; ?>">
+                                <?php
+                            $id = $rowq['report_id'];
+                            $a = "SELECT COUNT(reply_id) AS feedback FROM report_feedback WHERE report_id='$id'";
+                            $resa = mysqli_query($dbcon, $a);
+                            $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
+                            if ($rowa['feedback'] == 0){
+                            ?>
+                                <span class="badge bg-secondary">รอการตอบกลับ</span>
+                                <?php
+                            }else{
+                            ?>
+                                <span class="badge bg-success">ตอบกลับแล้ว</span>
+                                <?php
+                            }
+                            ?>
+                            </a>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
+                </tbody>
+            </table>
+        </div>
+        <?php
+        }
+        ?>
+
+        <!--Reply-->
+        <?php
+        if (isset($_GET['q']) && $_GET['q'] == 'reply' && $_SESSION['level'] == 'teacher'){
+        ?>
+        <div class="container">
+            <a href="?q=mgrace"><button class="btn btn-primary m-1">ตรวจบันทึกความดี</button></a>
+            <a href="?q=msocial"><button class="btn btn-success m-1">จัดการโพสต์</button></a>
+            <a href="?q=maccount"><button class="btn btn-info m-1">จัดการบัญชีนักเรียน</button></a>
+            <a href="?q=mreport"><button class="btn btn-warning m-1">จัดการรายงานปัญหา</button></a>
+            <br><br>
+            <?php
+            $id = $_GET['g'];
+            $q = "SELECT * FROM report WHERE report_id='$id'";
+            $resq = mysqli_query($dbcon, $q);
+            $rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC);
+            ?>
+            <div class="content">
+                <p>หมายเลขกระทู้ <span class="text-primary">
+                        <?php echo $rowq['report_id']; ?>
+                    </span></p>
+                <h3>
+                    <?php echo $rowq['report_topic']; ?>
+                </h3>
+                <p>
+                    <?php echo $rowq['report_detail']; ?>
+                </p>
+                <p class="text-end">ส่งเมื่อ
+                    <?php echo $rowq['report_timestamp']; ?>
+                </p>
+            </div>
+            <div class="my-3 mx-auto col-lg-6 col-md-12 col-sm-12">
+                <form action="app.php?func=replyadd" method="POST">
+                    <label for="detail">ตอบกลับ</label>
+                    <input type="text" placeholder="ตอบกลับ" class="form-control" required name="detail" id="">
+                    <input type="hidden" name="uid" value="<?php echo $uid; ?>" id="">
+                    <input type="hidden" name="sid" value="<?php echo $rowq['report_id']; ?>" id="">
+                    <p class="text-center my-3"><input type="submit" class="btn btn-primary" value="ตอบ"></p>
+                </form>
+            </div>
+            <?php
+            $a = "SELECT * FROM report_feedback WHERE report_id='$id' ORDER BY reply_id DESC";
+            $resa = mysqli_query($dbcon, $a);
+            while ($rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC)) {
+            ?>
+            <div class="content">
+                <h3>
+                    <?php echo $rowa['reply_detail']; ?>
+                </h3>
+                <p>ตอบกลับเมื่อ
+                    <?php echo $rowa['reply_timestamp']; ?>
+                </p>
+            </div>
+            <br>
+
+            <?php
+        }
+        ?>
         </div>
         <?php
         }
