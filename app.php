@@ -32,6 +32,8 @@
             delcomment();
         }elseif ($_GET['func'] == 'likeadd') {
             likeadd();
+        }elseif ($_GET['func'] == 'teacheradd') {
+            teacheradd();
         }
         
     }
@@ -377,6 +379,7 @@
             echo "</script>";
         }
     }
+
     function likeadd(){
         require 'connection.php';
         $type = $_GET['type'];
@@ -397,6 +400,23 @@
                 echo "window.location.href='index.php';";
                 echo "</script>";
             }
+        }else{
+            echo "<script>";
+            echo "alert('เกิดข้อผิดพลาดในขณะนี้');";
+            echo "window.location.href='index.php';";
+            echo "</script>";
+        }
+    }
+
+    function teacheradd(){
+        require 'connection.php';
+        $uid = $_GET['g'];
+        $q = "UPDATE members SET member_level='teacher' WHERE member_id='$uid'";
+        $resq = mysqli_query($dbcon, $q);
+        if($resq){
+            echo "<script>";
+            echo "window.location.href='main.php?q=account&g=$uid';";
+            echo "</script>";
         }else{
             echo "<script>";
             echo "alert('เกิดข้อผิดพลาดในขณะนี้');";

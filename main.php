@@ -1610,6 +1610,9 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                         value="<?php echo $rowa['member_address']; ?>" placeholder="ที่อยู่" required>
                     <br>
                     <p class="text-center">
+                        <a href="app.php?func=teacheradd&g=<?php echo $rowa['member_id']; ?>">
+                            <input type="button" class="btn btn-outline-primary" value="ตั้งเป็นบทบาทครู">
+                        </a>
                         <a href="app.php?func=delaccount&g=<?php echo $rowa['member_id']; ?>">
                             <input type="button" class="btn btn-outline-danger" value="ลบ">
                         </a>
