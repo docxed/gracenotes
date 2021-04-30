@@ -411,10 +411,12 @@
     function teacheradd(){
         require 'connection.php';
         $uid = $_GET['g'];
-        $q = "UPDATE members SET member_level='teacher' WHERE member_id='$uid'";
+        $val = $_GET['v'];
+        $q = "UPDATE members SET member_level='$val' WHERE member_id=$uid";
         $resq = mysqli_query($dbcon, $q);
         if($resq){
             echo "<script>";
+            echo "alert('ตั้งเป็นบทบาท $val สำเร็จ');";
             echo "window.location.href='main.php?q=account&g=$uid';";
             echo "</script>";
         }else{

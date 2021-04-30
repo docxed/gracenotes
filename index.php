@@ -107,12 +107,12 @@ if (isset($_SESSION['uid'])){
             <input type="text" class="form-control" placeholder="นามสกุล" name="lname" maxlength="30" required>
           </div>
         </div>
-        <label for="class">ชั้นมัธยมศึกษาปีที่</label>
+        <label for="class">ห้องเรียน</label>
         <input type="text" class="form-control" placeholder="ชั้นมัธยมศึกษาปีที่ ตัวอย่าง 6/6" name="class"
-          maxlength="5" required>
+          maxlength="5">
         <label for="no">เลขที่</label>
-        <input type="number" class="form-control" placeholder="เลขที่" name="no" maxlength="2" min="1" max="99"
-          required>
+        <input type="text" class="form-control" placeholder="เลขที่" name="no" maxlength="2"
+          >
         <label for="dob">วัน/เดือน/ปี เกิด</label>
         <input type="date" class="form-control" name="dob" required>
         <label for="address1">ที่อยู่</label>

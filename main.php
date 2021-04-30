@@ -205,7 +205,8 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
             <?php
             }else{
             ?>
-            <a href="app.php?func=likeadd&type=like&uid=<?php echo $uid; ?>&sid=<?php echo $id; ?>" style="text-decoration: none;">
+            <a href="app.php?func=likeadd&type=like&uid=<?php echo $uid; ?>&sid=<?php echo $id; ?>"
+                style="text-decoration: none;">
                 <span class="text-dark">
                     <i class="fas fa-lg fa-thumbs-up m-3"></i>
             </a>
@@ -224,7 +225,8 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
             <?php
             }else{
             ?>
-            <a href="app.php?func=likeadd&type=love&uid=<?php echo $uid; ?>&sid=<?php echo $id; ?>" style="text-decoration: none;">
+            <a href="app.php?func=likeadd&type=love&uid=<?php echo $uid; ?>&sid=<?php echo $id; ?>"
+                style="text-decoration: none;">
                 <span class="text-dark">
                     <i class="fas fa-lg fa-heart m-3"></i>
             </a>
@@ -243,7 +245,8 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
             <?php
             }else{
             ?>
-            <a href="app.php?func=likeadd&type=sadu&uid=<?php echo $uid; ?>&sid=<?php echo $id; ?>" style="text-decoration: none;">
+            <a href="app.php?func=likeadd&type=sadu&uid=<?php echo $uid; ?>&sid=<?php echo $id; ?>"
+                style="text-decoration: none;">
                 <span class="text-dark">
                     <i class="fas fa-praying-hands m-3"></i>
             </a>
@@ -466,10 +469,10 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                 </div>
                 <label for="class">ห้องเรียน</label>
                 <input type="text" class="form-control" name="class" value="<?php echo $rowa['member_class']; ?>"
-                    placeholder="ห้องเรียน" maxlength="5" required>
+                    placeholder="ห้องเรียน" maxlength="5">
                 <label for="no">เลขที่</label>
                 <input type="number" class="form-control" name="no" value="<?php echo $rowa['member_no']; ?>"
-                    placeholder="เลขที่" min="1" max="99" required>
+                    placeholder="เลขที่" maxlength="2">
                 <label for="dob">วัน/เดือน/ปี เกิด</label>
                 <input type="date" class="form-control" name="dob" value="<?php echo $rowa['member_dob']; ?>"
                     placeholder="วัน/เดือน/ปี เกิด" required>
@@ -1527,7 +1530,7 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                 </thead>
                 <tbody>
                     <?php
-                        $q = "SELECT * FROM members WHERE member_level='student' ORDER BY member_id ASC";
+                        $q = "SELECT * FROM members ORDER BY member_id ASC";
                         $resq = mysqli_query($dbcon, $q);
                         while ($rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC)) {
                 ?>
@@ -1609,14 +1612,35 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                     <input type="text" class="form-control" name="address"
                         value="<?php echo $rowa['member_address']; ?>" placeholder="ที่อยู่" required>
                     <br>
+                    <?php
+                        if ($_GET['g'] != $uid){
+                        ?>
                     <p class="text-center">
-                        <a href="app.php?func=teacheradd&g=<?php echo $rowa['member_id']; ?>">
+                        <?php
+                        if ($rowa['member_level'] == "teacher"){
+                        ?>
+                        <a href="app.php?func=teacheradd&g=<?php echo $rowa['member_id']; ?>&v=student">
+                            <input type="button" class="btn btn-outline-info" value="ตั้งเป็นบทบาทนักเรียน">
+                        </a>
+                        <?php
+                        }
+                        ?>
+                        <?php
+                        if ($rowa['member_level'] == "student"){
+                        ?>
+                        <a href="app.php?func=teacheradd&g=<?php echo $rowa['member_id']; ?>&v=teacher">
                             <input type="button" class="btn btn-outline-primary" value="ตั้งเป็นบทบาทครู">
                         </a>
+                        <?php
+                        }
+                        ?>
                         <a href="app.php?func=delaccount&g=<?php echo $rowa['member_id']; ?>">
                             <input type="button" class="btn btn-outline-danger" value="ลบ">
                         </a>
                     </p>
+                    <?php
+                        }
+                        ?>
                 </form>
             </div>
             <br><br>
