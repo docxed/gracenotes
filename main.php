@@ -702,7 +702,7 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                         </p>
                     </div>
                     <a href="grace/<?php echo $rowq['grace_img']; ?>" target="_blank"><img
-                            src="grace/<?php echo $rowq['_img']; ?>" class="rounded card-img-bottom"></a>
+                            src="grace/<?php echo $rowq['grace_img']; ?>" class="rounded card-img-bottom"></a>
                 </div>
                 <br>
             </div>
