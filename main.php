@@ -339,6 +339,9 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
         $resq = mysqli_query($dbcon, $q);
         $rowq = mysqli_fetch_array($resq, MYSQLI_ASSOC);
         ?>
+        <?php
+        if ($rowq){
+        ?>
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex">
@@ -366,6 +369,9 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                 <a href="grace/<?php echo $rowq['grace_img']; ?>" target="_blank"><img
                         src="grace/<?php echo $rowq['grace_img']; ?>" class="rounded card-img-bottom"></a>
             </div>
+            <?php
+        }
+        ?>
             <br>
         </div>
         <br><br>
@@ -696,7 +702,7 @@ $rowa = mysqli_fetch_array($resa, MYSQLI_ASSOC);
                         </p>
                     </div>
                     <a href="grace/<?php echo $rowq['grace_img']; ?>" target="_blank"><img
-                            src="grace/<?php echo $rowq['grace_img']; ?>" class="rounded card-img-bottom"></a>
+                            src="grace/<?php echo $rowq['_img']; ?>" class="rounded card-img-bottom"></a>
                 </div>
                 <br>
             </div>
